@@ -1,3 +1,5 @@
+$visited-color-animation: #99d6ff;
+$visited-color: #e6f5ff;
 
 .visualizer-table-container {
     display: block;
@@ -22,5 +24,29 @@
 }
 
 #VISITED {
-    background-color: cyan;
+    animation: fadeinVisited 0.4s;
+    background-color: $visited-color;
+
 }
+
+#PATH {
+    background-color: orange;
+    animation: fadeinPath 2s;
+    opacity: 1;
+    border: none;
+}
+
+@keyframes fadeinPath {
+    from { opacity:0; }
+    to { opacity:1; }
+}
+
+
+@keyframes fadeinVisited {
+    from { opacity:0; }
+    to { 
+        opacity:1; 
+        background-color: $visited-color-animation;
+    }
+}
+

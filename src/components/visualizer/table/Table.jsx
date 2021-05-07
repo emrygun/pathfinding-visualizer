@@ -4,11 +4,13 @@ import bfs from '../../algorithms/bfs'
 
 import './table.scss'
 
+//Table size
 const cols = 40;
 const rows = 25;
 
+//Default start and end points
 var NODE_START = { x: 0, y: 0 };
-var NODE_END = { x: 39, y: 24 }; //fix it 
+var NODE_END = { x: 39, y: 24 }; 
 
 export const Table = ({DrawMode, isRunning, setRunning}) => {
 	const [Grid, setGrid] = useState([]);
