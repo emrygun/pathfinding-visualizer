@@ -1,0 +1,19 @@
+
+.visualizer-table-container {
+    display: block;
+    .table {
+        margin: 0 auto;
+    }
+}
+
+#START_POINT {
+    background-color: green;
+}
+
+#END_POINT {
+    background-color: red;
+}
+
+#WALL {
+    background-color: gray;
+}
