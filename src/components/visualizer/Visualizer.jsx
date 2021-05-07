@@ -5,6 +5,7 @@ import './visualizer.scss';
 
 export const Visualizer = () => {
     const [DrawMode, setDrawMode] = useState(0);
+    const [isRunning, setRunning] = useState(false);
 
     useEffect(() => {
     }, [])
@@ -17,7 +18,11 @@ export const Visualizer = () => {
                     setDrawMode={setDrawMode}
                 />
             </div>
-            <Table DrawMode={DrawMode}/>
+            <Table 
+                DrawMode={DrawMode}
+                setRunning={setRunning}
+                Running={isRunning}
+            />
         </div>
     );
 }

@@ -3,6 +3,9 @@
     display: block;
     .table {
         margin: 0 auto;
+        table-layout: fixed;
+        td {
+        }
     }
 }
 
@@ -16,4 +19,8 @@
 
 #WALL {
     background-color: gray;
+}
+
+#VISITED {
+    background-color: cyan;
 }

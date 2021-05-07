@@ -1,69 +1,69 @@
 import React, {useState, useEffect} from 'react';
 
+import bfs from '../../algorithms/bfs'
+
 import './table.scss'
 
 const cols = 40;
 const rows = 25;
 
+var NODE_START = { x: 0, y: 0 };
+var NODE_END = { x: 39, y: 24 }; //fix it 
 
-export const Table = ({DrawMode}) => {
+export const Table = ({DrawMode, isRunning, setRunning}) => {
 	const [Grid, setGrid] = useState([]);
 
-    let NODE_START_ROW = 0;
-    let NODE_START_COL = 0;
 
-    let NODE_END_ROW = 999; //fix it 
-    let NODE_END_COL = 0;
+    const changeCellState = (row, col, state) => {
+        document.getElementsByTagName('td')[col + row * cols]
+        .setAttribute('id', state)
+    }
 
+    const getCellState = (row, col) => {
+        return document.getElementsByTagName('td')[col + row * cols]
+        .getAttribute('id')
+    }
 
-    const clickHandler = (rowIndex, colIndex) => {
+    const clickHandler = (colIndex, rowIndex) => {
         console.log(rowIndex, colIndex);
         switch (DrawMode) {
             case 0:
-                if (document.getElementsByTagName('td')[rowIndex + colIndex * cols]
-                .getAttribute('id') === 'WALL')
-                    document.getElementsByTagName('td')[rowIndex + colIndex * cols]
-                    .setAttribute('id', '')
-                else
-                    document.getElementsByTagName('td')[rowIndex + colIndex * cols]
-                    .setAttribute('id', 'WALL')
+                if (getCellState(rowIndex, colIndex) === 'WALL') {
+                    changeCellState(rowIndex, colIndex, '');
+                    Grid[rowIndex][colIndex] = 0;
+                }
+                else {
+                    changeCellState(rowIndex, colIndex, 'WALL');
+                    Grid[rowIndex][colIndex] = 1;
+                }
                 break;
             case 1:
                 //Change starting position
-                document.getElementsByTagName('td')[NODE_START_ROW + NODE_START_COL * cols]
-                .setAttribute('id', '')
-                NODE_START_COL = colIndex;
-                NODE_START_ROW = rowIndex;
-                document.getElementsByTagName('td')[NODE_START_ROW + NODE_START_COL * cols]
-                .setAttribute('id', 'START_POINT')
+                console.log(NODE_START.y, NODE_START.x)
+                changeCellState(NODE_START.y, NODE_START.x, '');
+                NODE_START = { y: rowIndex, x: colIndex};
+                changeCellState(NODE_START.y, NODE_START.x, 'START_POINT');
                 break;
             case 2:
                 //Change ending position
-                document.getElementsByTagName('td')[NODE_END_ROW + NODE_END_COL * cols]
-                .setAttribute('id', '')
-                NODE_END_COL = colIndex;
-                NODE_END_ROW = rowIndex;
-                document.getElementsByTagName('td')[NODE_END_ROW + NODE_END_COL * cols]
-                .setAttribute('id', 'END_POINT')
+                changeCellState(NODE_END.y, NODE_END.x, '');
+                NODE_END = { y: rowIndex, x: colIndex }
+                changeCellState(NODE_END.y, NODE_END.x, 'END_POINT');
                 break;
             default:
                 break;
         }
     };
 
+    const startSimulation = () => {
+        console.log(NODE_START)
+        bfs(Grid, NODE_START, NODE_END, {changeCellState})
+    }
+
     //Initializ Grid
     useEffect(() => {
         initializeGrid();
         
-        try {
-        //Start Point
-        document.getElementsByTagName('td')[0]
-        .setAttribute('id', 'START_POINT')
-
-        //Start Point
-        document.getElementsByTagName('td')[rows * cols - 1]
-        .setAttribute('id', 'END_POINT')
-        } catch {}
     }, []);
 
 	const initializeGrid = () => {
@@ -72,26 +72,12 @@ export const Table = ({DrawMode}) => {
         for (let i = 0; i < rows; i++)
             grid[i] = new Array(cols);
 
-        createSpot(grid);
-        setGrid(grid);
-	}
-
-    const createSpot = (grid) => {
         for (let i = 0; i < rows; i++)
             for (let j = 0; j < cols; j++)
-                grid[i][j] = new Spot(i, j);
-    }
-
-    function Spot(i, j) {
-        this.x = i;
-        this.y = j;
-        this.isStart = this.x === NODE_START_COL && this.y === NODE_START_ROW;
-        this.isEnd   = this.x === NODE_END_COL && this.y === NODE_END_ROW;
-        this.g = 0;
-        this.f = 0;
-        this.h = 0;
-    }
-
+                grid[i][j] = 0;
+        setGrid(grid);
+        console.log(grid)
+	}
 
     //Table cell as node 
     const TableWithNodeKeys = (
@@ -124,6 +110,7 @@ export const Table = ({DrawMode}) => {
             <table className="table is-bordered">
                 {TableWithNodeKeys}
             </table>
+            <button onClick={startSimulation} />
         </div>
     )
         
