@@ -1,7 +1,12 @@
 //Sleep function to add delay
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+function sleep(time) {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve();
+        }, time);
+    });
 }
+
 
 export default async function bfs(Grid, start, end, {changeCellState, setRunning}) {
     //Initialize queue and parent of cell 
@@ -73,7 +78,7 @@ export default async function bfs(Grid, start, end, {changeCellState, setRunning
                 }
 
                 //Paint the path
-                path.forEach(async(cell) => {
+                path.forEach((cell) => {
                     changeCellState(cell.y, cell.x, 'PATH')
                 })
 
@@ -88,7 +93,7 @@ export default async function bfs(Grid, start, end, {changeCellState, setRunning
             queue.push(neigbors[i]);
             changeCellState(nY, nX, "VISITED")
         }
-        await sleep(10);
+        await sleep(0.1);
     }
     setRunning(false);
 }

@@ -45,6 +45,9 @@
             }
         }
     }
+    footer {
+        margin-top: 40px;
+    }
 }
 
 //Animations and Cell states 
@@ -66,7 +69,7 @@ $visited-color: #e6f5ff;
 }
 
 #VISITED {
-    animation: fadeinVisited 0.4s;
+    animation: fadeinVisited 0.7s;
     background-color: $visited-color;
 
 }
