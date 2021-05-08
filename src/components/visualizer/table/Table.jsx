@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useLayoutEffect} from 'react';
 
 import bfs from '../../algorithms/bfs'
+import dfs from '../../algorithms/dfs';
 
 import './table.scss'
 
@@ -73,7 +74,8 @@ export const Table = () => {
         }
         setClear(false)
         setRunning(true)
-        bfs(Grid, NODE_START, NODE_END, {changeCellState, setRunning})
+        //bfs(Grid, NODE_START, NODE_END, {changeCellState, setRunning})
+        dfs(Grid, NODE_START, NODE_END, {changeCellState, setRunning})
     }
 
     const clearSimulation = () => {
