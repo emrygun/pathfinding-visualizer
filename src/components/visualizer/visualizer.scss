@@ -1,10 +1,18 @@
+.visualizer-container {
+    width: 1100px;
+    margin: 0 auto;
+    .pathfinder {
+        margin-top: 5vh;
+        .options-container {
+            .DrawModeSelect-container {
+                margin-top: 20px;
 
-.DrawModeSelect-container {
-    margin-top: 20px;
-
-    .buttons {
-        margin-bottom: 5px;
-        display: block;
-        margin-inline: 20px;
+                .buttons {
+                    margin-bottom: 5px;
+                    display: block;
+                    margin-inline: 20px;
+                }
+            }
+        }
     }
 }

@@ -3,7 +3,7 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export default async function bfs(Grid, start, end, {changeCellState}) {
+export default async function bfs(Grid, start, end, {changeCellState, setRunning}) {
     //Initialize queue and parent of cell 
     let queue = [];
     const parentOfCell = [];
@@ -76,6 +76,8 @@ export default async function bfs(Grid, start, end, {changeCellState}) {
                 path.forEach(async(cell) => {
                     changeCellState(cell.y, cell.x, 'PATH')
                 })
+
+                setRunning(false);
                 return 
             }
 
@@ -86,7 +88,7 @@ export default async function bfs(Grid, start, end, {changeCellState}) {
             queue.push(neigbors[i]);
             changeCellState(nY, nX, "VISITED")
         }
-
         await sleep(10);
     }
+    setRunning(false);
 }

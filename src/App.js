@@ -1,12 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
 
-import { Visualizer } from './components/visualizer/Visualizer'
+import { Table } from './components/visualizer/table/Table.jsx'
 
 function App() {
   return (
     <div className="App">
-        <Visualizer/>
+        <Table/>
     </div>
   );
 }
