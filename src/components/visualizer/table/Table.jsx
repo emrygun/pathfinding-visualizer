@@ -23,12 +23,11 @@ const changeCellState = (row, col, state) => {
 const getCellState = (row, col) => {
     return document.getElementsByClassName('cell')[col + row * cols]
     .getAttribute('id')
-
-
 }
 
 export const Table = () => {
     const [DrawMode, setDrawMode] = useState(0);
+    const [Algorithm, setAlgorithm] = useState('Breadth-First Search'); //0 means BFS
     const [isRunning, setRunning] = useState(false);
     const [isClear, setClear]     = useState(true);
 
@@ -72,10 +71,21 @@ export const Table = () => {
             window.alert("Please set Start and Goal nodes.")
             return 
         }
+
         setClear(false)
         setRunning(true)
-        //bfs(Grid, NODE_START, NODE_END, {changeCellState, setRunning})
-        dfs(Grid, NODE_START, NODE_END, {changeCellState, setRunning})
+
+        //Holding strings in state is not a good practice
+        //Find a better way
+        switch (Algorithm) {
+            case "Breadth-First Search":
+                bfs(Grid, NODE_START, NODE_END, {changeCellState, setRunning});
+                break;
+            case "Depth-First Search":
+                dfs(Grid, NODE_START, NODE_END, {changeCellState, setRunning});
+                break;
+            default: break;
+        }
     }
 
     const clearSimulation = () => {
@@ -161,9 +171,13 @@ export const Table = () => {
         initializeGrid();
     }, []);
 
-    //Initializ Table
-    useLayoutEffect(() => {
-    }, []);
+    const returnAlgoName = () => {
+        switch (Algorithm) {
+            case 0: return "Breadth-First Search"
+            case 1: return "Depth-First Search"
+            default: return null;
+        }
+    } 
 
     return (
     <div className="main-container">
@@ -176,6 +190,9 @@ export const Table = () => {
                             startSimulation={startSimulation}
                             resetSimulation={resetSimulation}
                             clearSimulation={clearSimulation}
+                            Algorithm={Algorithm}
+                            setAlgorithm={setAlgorithm}
+                            returnAlgoName={returnAlgoName}
                         />
                     </div>
                     {TableWithNodeKeys}
@@ -191,7 +208,7 @@ export const Table = () => {
     )
 }
 
-const DrawModeSelect = ({setDrawMode, startSimulation, resetSimulation, clearSimulation}) => {
+const DrawModeSelect = ({setDrawMode, startSimulation, resetSimulation, clearSimulation, Algorithm, setAlgorithm, returnAlgoName}) => {
     return (
       <div className="DrawModeSelect-container columns">
         <div className="buttons column">
@@ -252,11 +269,11 @@ const DrawModeSelect = ({setDrawMode, startSimulation, resetSimulation, clearSim
           <div className="dropdown is-hoverable">
             <div className="dropdown-trigger">
               <button
-                className="button is-small is-dark is-outlined"
+                className="button AlgoDropdownButton is-small is-dark is-outlined"
                 aria-haspopup="true"
                 aria-controls="dropdown-menu4"
               >
-                <span>Select Algorithm</span>
+                  <span className="text">{Algorithm}</span>
                 <span className="icon is-small">
                   <i className="fas fa-angle-down" aria-hidden="true"></i>
                 </span>
@@ -264,12 +281,21 @@ const DrawModeSelect = ({setDrawMode, startSimulation, resetSimulation, clearSim
             </div>
             <div className="dropdown-menu" id="dropdown-menu4" role="menu">
               <div className="dropdown-content">
-                <div class="dropdown-content">
-                  <a href="#" class="dropdown-item">
-                    Breadth First Search
-                  </a>
+                    <span class="dropdown-item" onClick={() => setAlgorithm('Breadth-First Search')}>
+                        <span className="text">Breadth-First Search</span>
+                      <span className="icon is-small">
+                      {(Algorithm === 'Breadth-First Search' ?  <i className="fas fa-check" aria-hidden="true"/>: null)}
+                </span>
+                  </span>
                 </div>
-              </div>
+                <div className="dropdown-content" onClick={() => setAlgorithm('Depth-First Search')}>
+                  <span className="dropdown-item">
+                  <span className="text">Depth-First Search</span>
+                      <span className="icon is-small">
+                      {(Algorithm === 'Depth-First Search' ?  <i className="fas fa-check" aria-hidden="true"/>: null)}
+                </span>
+                  </span>
+                </div>
             </div>
           </div>
         </div>

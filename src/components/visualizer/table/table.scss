@@ -18,6 +18,26 @@
                         margin-bottom: 5px;
                         display: block;
                         margin-inline: 20px;
+                        .AlgoDropdownButton {
+                            width: 155px;
+                            display: block;
+                            .text {
+                                float: left;
+                            }
+                            .icon {
+                                float: right;
+                            }
+                        }
+                    }
+                    .dropdown-content {
+                        display: block;
+                        height: 50px;
+                        .text {
+                            float: left;
+                        }
+                        .icon {
+                            float: right;
+                        }
                     }
                 }
             }
@@ -100,4 +120,11 @@ $visited-color: #e6f5ff;
 	-webkit-user-drag: none;
 	-webkit-app-region: no-drag;
 	cursor: default;
+}
+
+.button {
+    cursor: pointer;
+    * {
+        cursor: pointer;
+    }
 }
