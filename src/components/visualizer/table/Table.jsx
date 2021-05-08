@@ -180,6 +180,13 @@ export const Table = () => {
                 </div>
             </div>
         </div>
+        <footer class="footer">
+          <div class="content has-text-centered">
+            <p>
+                Github: <a href="https://github.com/emrygun">@emrygun</a>. Powered by Bulma and React JS.
+            </p>
+          </div>
+        </footer>
     </div>
     )
 }
